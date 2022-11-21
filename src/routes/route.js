@@ -7,7 +7,9 @@ const ValidMid = require("../validator/validator")
 
 
 router.post("/functionup/colleges", ValidMid.collValid, CollControl.createCollege)
+
 router.post("/functionup/interns", ValidMid.internValid, InternControl.createIntern)
+
 router.get("/functionup/collegeDetails", CollControl.getCollegeIntern)
 
 

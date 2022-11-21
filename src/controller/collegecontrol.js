@@ -23,18 +23,14 @@ exports.getCollegeIntern = async (req, res) => {
     try {
         const collegeName = req.query.collegeName
         if (!collegeName)
-            return res
-                .status(400)
-                .send({ status: false, message: "please send the collegeName from quires" })
+            return res.status(400).send({ status: false, message: "please send the collegeName from quires" })
 
         let collegeDetails = await CollegeModel.findOne({
             name: collegeName,
             isDeleted: false
         })
         if (!collegeDetails)
-            return res
-                .status(404)
-                .send({ status: false, message: "college not exist" })
+            return res.status(404).send({ status: false, message: "college not exist" })
 
         let objectOfCollegeDetails = collegeDetails.toObject()
         let { name, fullName, logoLink } = { ...objectOfCollegeDetails }

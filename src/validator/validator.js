@@ -51,11 +51,11 @@ exports.internValid = async (req, res, next) => {
         if (!College) return res.status(400).send({ status: false, message: "Please enter a valid college name" })
 
 
-        let emailCheck = await CollModel.findOne({ email })
+        let emailCheck = await InternModel.findOne({ email })
         if (emailCheck) {
             return res.status(400).send({ status: false, message: "This email is already exist" })
         }
-        let mobileCheck = await CollModel.findOne({ mobile })
+        let mobileCheck = await InternModel.findOne({ mobile })
         if (mobileCheck) {
             return res.status(400).send({ status: false, message: "This mobile number is already exist" })
         }

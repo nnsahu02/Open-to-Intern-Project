@@ -1,22 +1,13 @@
 
-<<<<<<< HEAD
 const CollegeModel = require('../models/collegemodel')
 const InternModel = require("../models/internmodel")
 
-
 exports.createIntern = async (req, res) => {
-=======
-const collegemodel = require ('../models/collegemodel')
-const internmodel=require("../models/internmodel"
-)
-
-exports.createIntern =async (req, res) =>{
->>>>>>> 689259dc20401d4c1edbb4b6e4149639448bffef
 
     try {
         let internData = req.body
         let { name, email, mobile } = { ...internData }
-        let colName = internData.collegeName;
+        let colName = internData.college;
 
         let createData = await CollegeModel.findOne({ name: colName })
         if (!colName) {

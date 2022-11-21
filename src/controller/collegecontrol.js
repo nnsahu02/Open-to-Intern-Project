@@ -1,12 +1,12 @@
 
-const CollModel = require("../models/collegemodel")
+const CollegeModel = require("../models/collegemodel")
 
 
 exports.createCollege = async (req, res) => {
 
     try {
 
-        let createData = await CollModel.create(req.body)
+        let createData = await CollegeModel.create(req.body)
 
         res.status(201).send({ message: createData, status: true })
     }

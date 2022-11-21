@@ -3,6 +3,41 @@ const CollModel = require("../models/collegemodel")
 
 // validation for interns
 
+exports.internValid = async (req, res, next) => {
+
+    try {
+        const internDetail = req.body
+        let { name, email, mobile } = { ...internDetail }
+
+        if (Object.keys(internDetail) == 0) {
+            return res.status(404).send({ status: false, message: "Please enter student details" })
+        }
+        if (!name) {
+            return res.status(400).send({ status: false, message: "Please enter student name" })
+        }
+        if (!email) {
+            return res.status(400).send({ status: false, message: "Please enter student email" })
+        }
+        if (!mobile) {
+            return res.status(400).send({ status: false, message: "Please enter student mobile number" })
+        }
+
+
+
+        let emailCheck = await CollModel.findOne({ email })
+        if (emailCheck) {
+            return res.status(400).send({ status: false, message: "This email is already exist" })
+        }
+        let mobileCheck = await CollModel.findOne({ mobile })
+        if (mobileCheck) {
+            return res.status(400).send({ status: false, message: "This mobile number is already exist" })
+        }
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message, status: false })
+    }
+}
+
 const isValidName = (name) => {
 
     const nameRegex = /^[a-zA-Z]+$/.test(name)

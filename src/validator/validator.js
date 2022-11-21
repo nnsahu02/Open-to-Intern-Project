@@ -3,11 +3,28 @@ const CollModel = require("../models/collegemodel")
 
 // validation for interns
 
+const isValidName = (name) => {
+    /^[a-zA-Z]+$/.test(name)
+    return true
+}
+const isValidEmail = (email) => {
+    /^[a-z0-9_]{3,}@[a-z]{3,}[.]{1}[a-z]{3,6}$/.test(email)
+    return true
+}
+const isValidMobile = (mobile) => {
+    /^[6-9]\d{9}$/.test(mobile)
+    return true
+}
+const isValidLogo = (logoLink) => {
+    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(logoLink)
+    return true
+}
+
 exports.internValid = async (req, res, next) => {
 
     try {
         const internDetail = req.body
-        let { name, email, mobile } = { ...internDetail }
+        let { name, email, mobile, college } = { ...internDetail }
 
         if (Object.keys(internDetail) == 0) {
             return res.status(404).send({ status: false, message: "Please enter student details" })
@@ -21,7 +38,17 @@ exports.internValid = async (req, res, next) => {
         if (!mobile) {
             return res.status(400).send({ status: false, message: "Please enter student mobile number" })
         }
+        if (!college) {
+            return res.status(400).send({ status: false, message: "Please enter college name" })
+        }
 
+        let [Name, Mobile, Email, College] = [isValidName(name), isValidMobile(mobile), isValidEmail(email), isValidName(college)] 
+
+
+        if (!Name) return res.status(400).send({ status: false, message: "Please enter a valid name" })
+        if (!Mobile) return res.status(400).send({ status: false, message: "Please enter a valid mobile" })
+        if (!Email) return res.status(400).send({ status: false, message: "Please enter a valid email" })
+        if (!College) return res.status(400).send({ status: false, message: "Please enter a valid college name" })
 
 
         let emailCheck = await CollModel.findOne({ email })
@@ -32,28 +59,11 @@ exports.internValid = async (req, res, next) => {
         if (mobileCheck) {
             return res.status(400).send({ status: false, message: "This mobile number is already exist" })
         }
+        next()
     }
     catch (error) {
         res.status(500).send({ message: error.message, status: false })
     }
-}
-
-const isValidName = (name) => {
-
-    const nameRegex = /^[a-zA-Z]+$/.test(name)
-
-}
-
-const isValidEmail = (email) => {
-
-    const emailRegex = /^[a-z0-9_]{3,}@[a-z]{3,}[.]{1}[a-z]{3,6}$/.test(email)
-
-}
-
-const isValidMobile = (mobile) => {
-
-    const mobileRegex = /^[6-9]\d{9}$/.test(mobile)
-
 }
 
 // validation for colleges
@@ -85,6 +95,12 @@ exports.collValid = async (req, res, next) => {
                 .status(400)
                 .send({ status: false, message: "Please enter college logo link" })
         }
+
+        let [Name, FullName, LogoLink] = [isValidName(name), isValidName(fullName), isValidLogo(logoLink)]
+        if (!Name) return res.status(400).send({ status: false, message: "Please enter a valid college name" })
+        if (!FullName) return res.status(400).send({ status: false, message: "Please enter a valid college full name" })
+        if (!LogoLink) return res.status(400).send({ status: false, message: "Please enter a valid college logo link" })
+
 
         let nameCheck = await CollModel.findOne({ name })
         let fnameCheck = await CollModel.findOne({ fullName })

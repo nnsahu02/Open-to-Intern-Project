@@ -1,7 +1,7 @@
 const InternModel = require("../models/internmodel")
 const CollModel = require("../models/collegemodel")
 
-// validation for interns
+// validation functions
 
 const isValidName = (name) => {
     /^[a-zA-Z]+$/.test(name)
@@ -19,6 +19,8 @@ const isValidLogo = (logoLink) => {
     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(logoLink)
     return true
 }
+
+// validation for interns
 
 exports.internValid = async (req, res, next) => {
 
@@ -42,7 +44,7 @@ exports.internValid = async (req, res, next) => {
             return res.status(400).send({ status: false, message: "Please enter college name" })
         }
 
-        let [Name, Mobile, Email, College] = [isValidName(name), isValidMobile(mobile), isValidEmail(email), isValidName(college)] 
+        let [Name, Mobile, Email, College] = [isValidName(name), isValidMobile(mobile), isValidEmail(email), isValidName(college)]
 
 
         if (!Name) return res.status(400).send({ status: false, message: "Please enter a valid name" })

@@ -1,9 +1,9 @@
 
-import collegemodel, { findOne } from '../models/collegemodel'
-import internmodel, { create } from "../models/internmodel"
+const collegemodel = require ('../models/collegemodel')
+const internmodel=require("../models/internmodel"
+)
 
-
-export async function createIntern(req, res) {
+exports.createIntern =async (req, res) =>{
 
     try {
         let internData = req.body

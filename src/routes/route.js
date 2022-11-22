@@ -15,7 +15,7 @@ router.post("/functionup/colleges", ValidMid.collValid, CollegeControl.createCol
 
 router.post("/functionup/Intern", ValidMid.internValid, InternControl.createIntern)
 
-router.get("/functionup/getCollegeIntern", CollegeControl.getCollegeIntern)
+router.get("/functionup/collegeDetails", CollegeControl.getCollegeIntern)
 
 
 

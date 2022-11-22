@@ -28,7 +28,7 @@ exports.getCollegeIntern = async (req, res) => {
                 .status(400)
                 .send({ status: false, message: "Please enter a college name in quires" })
 
-        let collegeDetails = await collegeModel.findOne(
+        let collegeDetails = await CollegeModel.findOne(
             {
                 $or: [
                     { name: collegeName },

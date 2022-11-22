@@ -8,25 +8,26 @@ const isValid = function (value) {
     if (typeof value === "string" && value.trim().length === 0) return false
     if (typeof value === "undefined" || value === null) return false
     return true;
-};
+}
 
 // REGEX functions ----
 
 const isValidName = (name) => {
-    let nameRegex = /^[A-Za-z\s]{1,50}$/.test(name)
-    return nameRegex
+
+    return /^[A-Za-z\s]{1,50}$/.test(name)
 }
 const isValidEmail = (email) => {
-    let emailRegex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
-    return emailRegex
+
+    return /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
 }
 const isValidMobile = (mobile) => {
+
     return /^[6-9]\d{9}$/.test(mobile);
-};
+}
 const isValidLogo = (logoLink) => {
-    const nameRegex = /^[a-zA-Z0-9!@#$&()`.:?=_;~(){}%^*+,/"-]*$/;
-    return nameRegex.test(logoLink);
-};
+
+    return /^[a-zA-Z0-9!@#$&()`.:?=_;~(){}%^*+,/"-]*$/.test(logoLink);
+}
 
 
 // validation for colleges
@@ -162,7 +163,7 @@ exports.internValid = async (req, res, next) => {
         next()
     }
     catch (error) {
-        res.status(500).send({ message: error.message, status: false })
+        res.status(500).send({ status: false, message: error.message })
     }
 }
 
@@ -236,6 +237,6 @@ exports.collValid = async (req, res, next) => {
         next()
     }
     catch (error) {
-        res.status(500).send({ message: error.message, status: false })
+        res.status(500).send({ status: false, message: error.message })
     }
 }

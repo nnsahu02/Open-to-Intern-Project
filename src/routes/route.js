@@ -13,7 +13,7 @@ const InternControl = require("../controller/interncontrol")
 
 router.post("/functionup/colleges", ValidMid.collValid, CollegeControl.createCollege)
 
-router.post("/functionup/Intern", ValidMid.internValid, InternControl.createIntern)
+router.post("/functionup/interns", ValidMid.internValid, InternControl.createIntern)
 
 router.get("/functionup/collegeDetails", CollegeControl.getCollegeIntern)
 

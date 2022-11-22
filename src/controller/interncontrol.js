@@ -16,13 +16,14 @@ exports.createIntern = async (req, res) => {
         if (!findCollege) {
             return res
                 .status(404)
-                .send({ status: false, msg: "Can not find this college !" })
+                .send({ status: false, message: "Can not find this college !" })
         }
 
         let collegeId = findCollege["_id"]
         let toCreateIntern = { name, mobile, email, collegeId }
 
         let saveData = await InternModel.create(toCreateIntern)
+
         return res.status(201).send({ status: true, data: saveData })
     }
     catch (error) {

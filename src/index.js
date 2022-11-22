@@ -6,7 +6,7 @@ const app = express()
 
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://lonemohsin33:Diabetes7889%40@functionup.aq5cty2.mongodb.net/Project2",
+mongoose.connect("mongodb+srv://Adityakunta:IPSyBcf7uKmQrNcH@aditya.4payvyl.mongodb.net/?retryWrites=true&w=majority",
 
 { useNewUrlParser: true })
 

@@ -8,15 +8,15 @@ exports.createIntern =async (req, res) =>{
     try {
         let internData = req.body
         let {name, email, mobile} = {...internData}
-        let colName = internData.collegeName;
+        let collegeName = internData.collegeName;
 
-        let createData = await collegemodel.findOne({name:colName})
-        if(!colName) 
+        let findCollege = await collegemodel.findOne({name:collegeName})
+        if(!findCollege) 
         {return res 
-        .status(400)
+        .status(404)
         .send({status:false,msg:"college dose not exist"})}
 
-        let collegeId=createData["_id"]
+        let collegeId=findCollege["_id"]
         let toCreateIntern = {name,mobile,email,collegeId}
 
         let saveData = await internmodel.create(toCreateIntern)
@@ -38,10 +38,12 @@ exports. getCollegeIntern = async (req,res)=>{
         .status(400)
         .send({status:false,msg:"please send the collegeName from quires"})
 
-        let collegeDetails = await collegemodel.findOne({
-            name:collegeName,
-            isDeleted:false
-        })
+        let collegeDetails = await collegemodel.findOne(
+            {$or:[ 
+                {name:collegeName},
+                {fullName:collegeName}],
+                 isDeleted:false
+            })
         if(!collegeDetails) 
         return res
         .status(404)

@@ -18,7 +18,7 @@ const isValidEmail = (email) => {
     if (typeof email == 'undefined' || email == 'null')
         return false
 
-    let mailRegCheck = /^[a-z0-9_]{3,}@[a-z]{3,}[.]{1}[a-z]{3,6}$/.test(email)
+    let mailRegCheck = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
     if (mailRegCheck == true)
         return true
 
@@ -57,8 +57,8 @@ exports.collValid = async (req, res, next) => {
         const collDetail = req.body
         let { name, fullName, logoLink } = { ...collDetail }
 
-        if (Object.keys(collDetail) == 0) {
-            return res.status(404).send({ status: false, message: "Please enter college details" })
+        if (Object.keys(collDetail).length == 0) {
+            return res.status(400).send({ status: false, message: "Please enter college details" })
         }
 
         if (!name) {
@@ -113,7 +113,7 @@ exports.internValid = async (req, res, next) => {
         let { name, email, mobile, collegeName } = { ...internDetail }
 
         if (Object.keys(internDetail).length == 0) {
-            return res.status(404).send({ status: false, message: "Please enter student details" })
+            return res.status(400).send({ status: false, message: "Please enter student details" })
         }
         if (!name) {
             return res.status(400).send({ status: false, message: "Please enter student name" })

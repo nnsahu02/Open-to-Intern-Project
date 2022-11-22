@@ -10,10 +10,10 @@ exports.createCollege = async (req, res) => {
 
         let createData = await CollegeModel.create(req.body)
 
-        res.status(201).send({ message: createData, status: true })
+        res.status(201).send({ status: true, message: createData })
     }
     catch (error) {
-        res.status(500).send({ message: error.message, status: false })
+        res.status(500).send({ status: false, message: error.message })
     }
 }
 
@@ -26,8 +26,11 @@ exports.getCollegeIntern = async (req, res) => {
             return res.status(400).send({ status: false, message: "please send the collegeName from quires" })
 
         let collegeDetails = await CollegeModel.findOne({
-            name: collegeName,
-            isDeleted: false
+            $or: [
+                { name: collegeName },
+                { fullName: collegeName },
+                { isDeleted: false }
+            ]
         })
         if (!collegeDetails)
             return res.status(404).send({ status: false, message: "college not exist" })
@@ -56,6 +59,6 @@ exports.getCollegeIntern = async (req, res) => {
             .send({ status: true, data: internOf_a_college })
 
     } catch (error) {
-        res.status(500).send({ message: error.message, status: false })
+        res.status(500).send({ status: false, message: error.message })
     }
 }

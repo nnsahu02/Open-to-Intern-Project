@@ -11,12 +11,12 @@ exports.createIntern = async (req, res) => {
         let { name, email, mobile } = { ...internData }
         let clgName = internData.collegeName;
 
-        let createData = await CollegeModel.findOne({ name: clgName })
-        if (!clgName) {
+        let findclg = await CollegeModel.findOne({ name: clgName })
+        if (!findclg) {
             return res.status(400).send({ status: false, message: "college dose not exist" })
         }
 
-        let collegeId = createData["_id"]
+        let collegeId = findclg["_id"]
         let toCreateIntern = { name, mobile, email, collegeId }
 
         let saveData = await InternModel.create(toCreateIntern)

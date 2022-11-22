@@ -51,7 +51,7 @@ exports. getCollegeIntern = async (req,res)=>{
         let objectOfCollegeDetails = collegeDetails.toObject()
         let {name ,fullName ,logoLink}={...objectOfCollegeDetails}
 
-        let interDetails = await internmodel
+        let interDetails = await InternModel
         .find({ collegeId:collegeDetails._id,isDeleted:false})
         .select({name:1,email:1,mobile:1})
 

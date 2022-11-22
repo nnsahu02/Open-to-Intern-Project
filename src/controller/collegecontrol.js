@@ -28,8 +28,7 @@ exports.getCollegeIntern = async (req, res) => {
         let collegeDetails = await CollegeModel.findOne({
             $or: [
                 { name: collegeName },
-                { fullName: collegeName },
-                { isDeleted: false }
+                { fullName: collegeName }
             ]
         })
         if (!collegeDetails)

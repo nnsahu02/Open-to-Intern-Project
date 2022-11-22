@@ -8,10 +8,10 @@ app.use(express.json())
 
 mongoose.connect("mongodb+srv://Adityakunta:IPSyBcf7uKmQrNcH@aditya.4payvyl.mongodb.net/?retryWrites=true&w=majority",
 
-{ useNewUrlParser: true })
+    { useNewUrlParser: true })
 
-.then(() => console.log("MDB is connected"))
-.catch(err => console.log(err))
+    .then(() => console.log("MDB is connected"))
+    .catch(err => console.log(err))
 
 app.use('/', route)
 

@@ -1,9 +1,10 @@
 
-const collegemodel = require ('../models/collegemodel')
-const internmodel=require("../models/internmodel"
-)
+const CollegeModel = require('../models/collegemodel')
+const InternModel = require("../models/internmodel")
 
-exports.createIntern =async (req, res) =>{
+// creating intern data
+
+exports.createIntern = async (req, res) => {
 
     try {
         let internData = req.body
@@ -19,13 +20,11 @@ exports.createIntern =async (req, res) =>{
         let collegeId=findCollege["_id"]
         let toCreateIntern = {name,mobile,email,collegeId}
 
-        let saveData = await internmodel.create(toCreateIntern)
-       return res
-       .status(201)
-       .send({ message: saveData, status: true })
+        let saveData = await InternModel.create(toCreateIntern)
+        return res.status(201).send({ status: true, data: saveData })
     }
     catch (error) {
-        res.status(500).send({ message: error.message, status: false })
+        res.status(500).send({ status: false, message: error.message })
     }
 }
 

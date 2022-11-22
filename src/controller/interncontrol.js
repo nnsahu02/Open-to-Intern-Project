@@ -1,5 +1,5 @@
 
-const CollegeModel = require('../models/collegemodel')
+const collegeModel = require('../models/collegemodel')
 const InternModel = require("../models/internmodel")
 
 // creating intern data
@@ -11,7 +11,7 @@ exports.createIntern = async (req, res) => {
         let {name, email, mobile} = {...internData}
         let collegeName = internData.collegeName;
 
-        let findCollege = await collegemodel.findOne({name:collegeName})
+        let findCollege = await collegeModel.findOne({name:collegeName})
         if(!findCollege) 
         {return res 
         .status(404)
@@ -37,7 +37,7 @@ exports. getCollegeIntern = async (req,res)=>{
         .status(400)
         .send({status:false,msg:"please send the collegeName from quires"})
 
-        let collegeDetails = await collegemodel.findOne(
+        let collegeDetails = await collegeModel.findOne(
             {$or:[ 
                 {name:collegeName},
                 {fullName:collegeName}],

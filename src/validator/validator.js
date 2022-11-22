@@ -1,6 +1,7 @@
 const InternModel = require("../models/internmodel")
 const CollModel = require("../models/collegemodel")
 
+
 // validation functions
 
 const isValid = function (value) {
@@ -9,23 +10,23 @@ const isValid = function (value) {
     return true;
 };
 
+// REGEX functions ----
+
 const isValidName = (name) => {
-   let nameRegex = /^[A-Za-z\s]{1,50}$/.test(name)
+    let nameRegex = /^[A-Za-z\s]{1,50}$/.test(name)
     return nameRegex
 }
 const isValidEmail = (email) => {
-   let emailRegx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
-   return emailRegx
+    let emailRegex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
+    return emailRegex
 }
-const isValidMobile = (mobile) =>  {
+const isValidMobile = (mobile) => {
     return /^[6-9]\d{9}$/.test(mobile);
-  };
-  
-    
+};
 const isValidLogo = (logoLink) => {
     const nameRegex = /^[a-zA-Z0-9!@#$&()`.:?=_;~(){}%^*+,/"-]*$/;
-  return nameRegex.test(logoLink);
-  };
+    return nameRegex.test(logoLink);
+};
 
 
 // validation for colleges
@@ -51,6 +52,8 @@ exports.collValid = async (req, res, next) => {
         if (!logoLink) {
             return res.status(400).send({ status: false, message: "Please enter college logo link" })
         }
+
+        // using previously created REGEX functions ----
 
         let [Name, FullName, LogoLink] = [isValidName(name), isValidName(fullName), isValidLogo(logoLink)]
 
@@ -93,67 +96,68 @@ exports.internValid = async (req, res, next) => {
 
         if (Object.keys(internDetail) == 0) {
             return res
-            .status(404)
-            .send({ status: false, message: "Please provide details" })
+                .status(404)
+                .send({ status: false, message: "Please provide details" })
         }
         if (!isValid(name)) {
             return res
-            .status(400)
-            .send({ status: false, message: "Please enter student name" })
+                .status(400)
+                .send({ status: false, message: "Please enter student name" })
         }
         if (!isValid(email)) {
             return res
-            .status(400)
-            .send({ status: false, message: "Please enter student email" })
+                .status(400)
+                .send({ status: false, message: "Please enter student email" })
         }
         if (!isValid(mobile)) {
             return res
-            .status(400)
-            .send({ status: false, message: "Please enter student mobile number" })
+                .status(400)
+                .send({ status: false, message: "Please enter student mobile number" })
         }
         if (!isValid(collegeName)) {
             return res
-            .status(400)
-            .send({ status: false, message: "Please enter college name" })
+                .status(400)
+                .send({ status: false, message: "Please enter college name" })
         }
 
-        let [Name, Mobile, Email, CollegeName] = 
-               [isValidName(name),
-               isValidMobile(mobile),
-               isValidEmail(email),
-               isValidName(collegeName)] 
+        // using previously created REGEX functions ----
 
+        let [Name, Mobile, Email, CollegeName] =
+            [isValidName(name),
+            isValidMobile(mobile),
+            isValidEmail(email),
+            isValidName(collegeName)]
 
         if (!Name) return res
-        .status(400)
-        .send({ status: false, message: "Please enter a valid name" })
+            .status(400)
+            .send({ status: false, message: "Please enter a valid name" })
 
         if (!Mobile) return res
-        .status(400).
-        send({ status: false, message: "Please enter a valid mobile" })
+            .status(400).
+            send({ status: false, message: "Please enter a valid mobile" })
 
         if (!Email) return res
-        .status(400)
-        .send({ status: false, message: "Please enter a valid email" })
+            .status(400)
+            .send({ status: false, message: "Please enter a valid email" })
 
-        if (!CollegeName) 
-        return res
-        .status(400)
-        .send({ status: false, message: "Please enter a valid college name" })
+        if (!CollegeName)
+            return res
+                .status(400)
+                .send({ status: false, message: "Please enter a valid college name" })
 
 
 
         let emailCheck = await InternModel.findOne({ email })
         if (emailCheck) {
             return res
-            .status(400)
-            .send({ status: false, message: "This email is already exist" })
+                .status(400)
+                .send({ status: false, message: "This email is already exist" })
         }
         let mobileCheck = await InternModel.findOne({ mobile })
         if (mobileCheck) {
             return res
-            .status(400)
-            .send({ status: false, message: "This mobile number is already exist" })
+                .status(400)
+                .send({ status: false, message: "This mobile number is already exist" })
         }
         next()
     }
@@ -170,7 +174,6 @@ exports.collValid = async (req, res, next) => {
         const collDetail = req.body
         let { name, fullName, logoLink } = { ...collDetail }
 
-        
 
         if (Object.keys(collDetail) == 0) {
             return res
@@ -194,18 +197,20 @@ exports.collValid = async (req, res, next) => {
                 .send({ status: false, message: "Please enter college logo link" })
         }
 
+        // using previously created REGEX functions ----
+
         let [Name, FullName, LogoLink] =
-         [isValidName(name),
-             isValidName(fullName),
-              isValidLogo(logoLink)]
+            [isValidName(name),
+            isValidName(fullName),
+            isValidLogo(logoLink)]
 
         if (!Name) return res
-        .status(400)
-        .send({ status: false, message: "Please enter a valid college name" })
+            .status(400)
+            .send({ status: false, message: "Please enter a valid college name" })
 
         if (!FullName) return res
-        .status(400)
-        .send({ status: false, message: "Please enter a valid college full name" })
+            .status(400)
+            .send({ status: false, message: "Please enter a valid college full name" })
 
         if (!LogoLink) return res.status(400).send({ status: false, message: "Please enter a valid college logo link" })
 

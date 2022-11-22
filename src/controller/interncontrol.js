@@ -1,5 +1,7 @@
+
 const collegeModel = require('../models/collegemodel')
 const InternModel = require("../models/internmodel")
+
 
 // creating intern data
 

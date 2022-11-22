@@ -1,14 +1,22 @@
 const express = require('express')
 const router = express.Router()
 
-const CollControl = require("../controller/collegecontrol")
-const InternControl = require("../controller/interncontrol")
+
+
 const ValidMid = require("../validator/validator")
 
+const CollegeControl = require("../controller/collegecontrol")
 
-router.post("/functionup/colleges", ValidMid.collValid, CollControl.createCollege)
+const InternControl = require("../controller/interncontrol")
+
+
+
+router.post("/functionup/colleges", ValidMid.collValid, CollegeControl.createCollege)
+
 router.post("/functionup/Intern", ValidMid.internValid, InternControl.createIntern)
-router.get("/functionup/getCollegeIntern",InternControl.getCollegeIntern)
+
+router.get("/functionup/getCollegeIntern", CollegeControl.getCollegeIntern)
+
 
 
 module.exports = router

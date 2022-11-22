@@ -17,22 +17,27 @@ exports.createCollege = async (req, res) => {
     }
 }
 
-// searching colleges 
+// getting college details with interns 
 
 exports.getCollegeIntern = async (req, res) => {
     try {
         const collegeName = req.query.collegeName
         if (!collegeName)
-            return res.status(400).send({ status: false, message: "please send the collegeName from quires" })
+            return res
+                .status(400)
+                .send({ status: false, msg: "Please enter a college name in quires" })
 
-        let collegeDetails = await CollegeModel.findOne({
-            $or: [
-                { name: collegeName },
-                { fullName: collegeName }
-            ]
-        })
+        let collegeDetails = await collegeModel.findOne(
+            {
+                $or: [
+                    { name: collegeName },
+                    { fullName: collegeName }],
+                isDeleted: false
+            })
         if (!collegeDetails)
-            return res.status(404).send({ status: false, message: "college not exist" })
+            return res
+                .status(404)
+                .send({ status: false, msg: "Can not find this college !" })
 
         let objectOfCollegeDetails = collegeDetails.toObject()
         let { name, fullName, logoLink } = { ...objectOfCollegeDetails }
@@ -44,7 +49,7 @@ exports.getCollegeIntern = async (req, res) => {
         if (!interDetails[0]) {
             return res
                 .status(404)
-                .send({ Status: false, message: "no  intern applied for this college" })
+                .send({ Status: false, msg: "No intern applied for this college" })
         }
         let internOf_a_college = {
             name,
@@ -58,6 +63,6 @@ exports.getCollegeIntern = async (req, res) => {
             .send({ status: true, data: internOf_a_college })
 
     } catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        res.status(500).send({ message: error.message, status: false })
     }
 }

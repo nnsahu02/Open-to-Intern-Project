@@ -10,11 +10,13 @@ const CollegeControl = require("../controller/collegecontrol")
 const InternControl = require("../controller/interncontrol")
 
 
-
+// CREATING COLLEGE
 router.post("/functionup/colleges", ValidMid.collValid, CollegeControl.createCollege)
 
+// CREATING INTERN
 router.post("/functionup/interns", ValidMid.internValid, InternControl.createIntern)
 
+// GETING COLLEGE DETAILS
 router.get("/functionup/collegeDetails", CollegeControl.getCollegeIntern)
 
 

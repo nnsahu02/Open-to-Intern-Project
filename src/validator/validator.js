@@ -2,7 +2,7 @@ const InternModel = require("../models/internmodel")
 const CollModel = require("../models/collegemodel")
 
 
-// validation functions
+//>---------------------------------------> validation functions <---------------------------------------<\\
 
 const isValid = function (value) {
     if (typeof value === "string" && value.trim().length >= 1) return true
@@ -10,7 +10,10 @@ const isValid = function (value) {
 
 }
 
-// REGEX functions ----
+//---------------------------------------------------------------------------------------------------------\\
+
+
+//>------------------------------------------> REGEX functions <------------------------------------------<\\
 
 const isValidName = (name) => {
 
@@ -29,8 +32,10 @@ const isValidLogo = (logoLink) => {
     return /^(http[s]?:\/\/.*\.(?:png|jpeg))$/g.test(logoLink);
 }
 
+//---------------------------------------------------------------------------------------------------------\\
 
-// validation for colleges
+
+//>--------------------------------------> validation for colleges <--------------------------------------<\\
 
 exports.collValid = async (req, res, next) => {
 
@@ -40,7 +45,7 @@ exports.collValid = async (req, res, next) => {
         let name = collDetail.name.toLowerCase()
         let fullName = collDetail.fullName.toLowerCase()
         let logoLink = collDetail.logoLink
-        
+
         if (Object.keys(collDetail).length == 0) {
             return res.status(400).send({ status: false, message: "Please enter college details" })
         }
@@ -56,36 +61,32 @@ exports.collValid = async (req, res, next) => {
 
 
         if (!isValid(name)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter college name" })
+            return res.status(400).send({ status: false, message: "Please enter college name" })
         }
         if (!isValid(fullName)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter college full name" })
+            return res.status(400).send({ status: false, message: "Please enter college full name" })
         }
         if (!isValid(logoLink)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter college logo link" })
+            return res.status(400).send({ status: false, message: "Please enter college logo link" })
         }
 
         // using previously created REGEX functions ----
 
         let [Name, LogoLink] = [isValidName(name), isValidLogo(logoLink)]
 
-        if (!Name)
+        if (!Name) {
             return res.status(400).send({ status: false, message: "Please enter a valid college name" })
-
-
-        if (!LogoLink)
+        }
+        if (!LogoLink) {
             return res.status(400).send({ status: false, message: "Please enter a valid college logo link" })
+        }
 
+        // chicking details for uniqueness ----
 
         let nameCheck = await CollModel.findOne({ name: name })
         let fnameCheck = await CollModel.findOne({ fullName: fullName })
         let logoCheck = await CollModel.findOne({ logoLink: logoLink })
+
         if (nameCheck) {
             return res.status(400).send({ status: false, message: "College name is already exist" })
         }
@@ -98,44 +99,37 @@ exports.collValid = async (req, res, next) => {
         next()
     }
     catch (error) {
-        res.status(500).send({ status: false, msg: "coming from here", message: error.message })
+        return res.status(500).send({ status: false, message: error.message })
     }
 }
 
-// validation for interns
+//---------------------------------------------------------------------------------------------------------\\
+
+
+//>---------------------------------------> validation for interns <--------------------------------------<\\
 
 exports.internValid = async (req, res, next) => {
 
     try {
         const internDetail = req.body
         let collegeName = req.body.collegeName.toLowerCase()
-        
+
         let { name, email, mobile } = { ...internDetail }
 
         if (Object.keys(internDetail) == 0) {
-            return res
-                .status(404)
-                .send({ status: false, message: "Please provide details" })
+            return res.status(404).send({ status: false, message: "Please provide details" })
         }
         if (!isValid(name)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter student name" })
+            return res.status(400).send({ status: false, message: "Please enter student name" })
         }
         if (!isValid(email)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter student email" })
+            return res.status(400).send({ status: false, message: "Please enter student email" })
         }
         if (!isValid(mobile)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter student mobile number" })
+            return res.status(400).send({ status: false, message: "Please enter student mobile number" })
         }
         if (!isValid(collegeName)) {
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter college name" })
+            return res.status(400).send({ status: false, message: "Please enter college name" })
         }
 
         // using previously created REGEX functions ----
@@ -146,41 +140,36 @@ exports.internValid = async (req, res, next) => {
             isValidEmail(email),
             isValidName(collegeName)]
 
-        if (!Name) return res
-            .status(400)
-            .send({ status: false, message: "Please enter a valid name" })
+        if (!Name) {
+            return res.status(400).send({ status: false, message: "Please enter a valid name" })
+        }
+        if (!Mobile) {
+            return res.status(400).send({ status: false, message: "Please enter a valid mobile" })
+        }
+        if (!Email) {
+            return res.status(400).send({ status: false, message: "Please enter a valid email" })
+        }
+        if (!CollegeName) {
+            return res.status(400).send({ status: false, message: "Please enter a valid college name" })
+        }
 
-        if (!Mobile) return res
-            .status(400).
-            send({ status: false, message: "Please enter a valid mobile" })
-
-        if (!Email) return res
-            .status(400)
-            .send({ status: false, message: "Please enter a valid email" })
-
-        if (!CollegeName)
-            return res
-                .status(400)
-                .send({ status: false, message: "Please enter a valid college name" })
-
-
+        // checking for uniquness ----
 
         let emailCheck = await InternModel.findOne({ email })
-        if (emailCheck) {
-            return res
-                .status(400)
-                .send({ status: false, message: "This email is already exist" })
-        }
         let mobileCheck = await InternModel.findOne({ mobile })
+
+        if (emailCheck) {
+            return res.status(400).send({ status: false, message: "This email is already exist" })
+        }
         if (mobileCheck) {
-            return res
-                .status(400)
-                .send({ status: false, message: "This mobile number is already exist" })
+            return res.status(400).send({ status: false, message: "This mobile number is already exist" })
         }
         next()
     }
     catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message })
     }
 }
+
+//---------------------------------------------------------------------------------------------------------\\
 

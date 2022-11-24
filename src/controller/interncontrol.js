@@ -3,7 +3,8 @@ const collegeModel = require('../models/collegemodel')
 const InternModel = require("../models/internmodel")
 
 
-// creating intern data
+//>---------------------------------------> creating intern data <----------------------------------------<\\
+
 
 exports.createIntern = async (req, res) => {
 
@@ -14,9 +15,7 @@ exports.createIntern = async (req, res) => {
 
         let findCollege = await collegeModel.findOne({ name: collegeName })
         if (!findCollege) {
-            return res
-                .status(404)
-                .send({ status: false, message: "Can not find this college !" })
+            return res.status(404).send({ status: false, message: "Can not find this college !" })
         }
 
         let collegeId = findCollege["_id"]
@@ -27,6 +26,8 @@ exports.createIntern = async (req, res) => {
         return res.status(201).send({ status: true, data: saveData })
     }
     catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message })
     }
 }
+
+//---------------------------------------------------------------------------------------------------------\\

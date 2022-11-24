@@ -6,8 +6,8 @@ const CollModel = require("../models/collegemodel")
 
 const isValid = function (value) {
     if (typeof value === "string" && value.trim().length >= 1) return true
-    if (typeof value === "undefined" || value === null ) return false
-    
+    if (typeof value === "undefined" || value === null) return false
+
 }
 
 // REGEX functions ----
@@ -36,8 +36,11 @@ exports.collValid = async (req, res, next) => {
 
     try {
         const collDetail = req.body
-        let { name, fullName, logoLink } = { ...collDetail }
 
+        let name = collDetail.name.toLowerCase()
+        let fullName = collDetail.fullName.toLowerCase()
+        let logoLink = collDetail.logoLink
+        
         if (Object.keys(collDetail).length == 0) {
             return res.status(400).send({ status: false, message: "Please enter college details" })
         }
@@ -80,9 +83,9 @@ exports.collValid = async (req, res, next) => {
             return res.status(400).send({ status: false, message: "Please enter a valid college logo link" })
 
 
-        let nameCheck = await CollModel.findOne({ name })
-        let fnameCheck = await CollModel.findOne({ fullName })
-        let logoCheck = await CollModel.findOne({ logoLink })
+        let nameCheck = await CollModel.findOne({ name: name })
+        let fnameCheck = await CollModel.findOne({ fullName: fullName })
+        let logoCheck = await CollModel.findOne({ logoLink: logoLink })
         if (nameCheck) {
             return res.status(400).send({ status: false, message: "College name is already exist" })
         }
@@ -95,7 +98,7 @@ exports.collValid = async (req, res, next) => {
         next()
     }
     catch (error) {
-        res.status(500).send({ status: false, msg : "coming from here", message: error.message })
+        res.status(500).send({ status: false, msg: "coming from here", message: error.message })
     }
 }
 
@@ -105,7 +108,9 @@ exports.internValid = async (req, res, next) => {
 
     try {
         const internDetail = req.body
-        let { name, email, mobile, collegeName } = { ...internDetail }
+        let collegeName = req.body.collegeName.toLowerCase()
+        
+        let { name, email, mobile } = { ...internDetail }
 
         if (Object.keys(internDetail) == 0) {
             return res

@@ -21,7 +21,7 @@ exports.createCollege = async (req, res) => {
         res.status(201).send({ status: true, message: createData })
     }
     catch (error) {
-        res.status(500).send({ status: false, msg : "coming from controller", message: error.message })
+        res.status(500).send({ status: false, msg: "coming from controller", message: error.message })
     }
 }
 
@@ -29,7 +29,7 @@ exports.createCollege = async (req, res) => {
 
 exports.getCollegeIntern = async (req, res) => {
     try {
-        const collegeName = req.query.collegeName
+        const collegeName = req.query.collegeName.toLowerCase()
         if (!collegeName)
             return res
                 .status(400)

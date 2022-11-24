@@ -10,7 +10,7 @@ exports.createIntern = async (req, res) => {
     try {
         let internData = req.body
         let { name, email, mobile } = { ...internData }
-        let collegeName = internData.collegeName;
+        let collegeName = internData.collegeName.toLowerCase();
 
         let findCollege = await collegeModel.findOne({ name: collegeName })
         if (!findCollege) {

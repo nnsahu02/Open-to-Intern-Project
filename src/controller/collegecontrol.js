@@ -9,12 +9,19 @@ exports.createCollege = async (req, res) => {
 
     try {
 
+        let bodyData = req.body
+        let lowerName = bodyData.name.toLowerCase()
+        let lowerFullName = bodyData.fullName.toLowerCase()
+
+        req.body.name = lowerName
+        req.body.fullName = lowerFullName
+
         let createData = await CollegeModel.create(req.body)
 
         res.status(201).send({ status: true, message: createData })
     }
     catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        res.status(500).send({ status: false, msg : "coming from controller", message: error.message })
     }
 }
 

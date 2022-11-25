@@ -1,20 +1,32 @@
 {
-  "name": "function-up-intern",
-  "version": "0.1.0",
-  "private": true,
+  "name": "lithium",
+  "version": "1.0.0",
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
     "export": "next export"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabihak89/lithium.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabihak89/lithium/issues"
+  },
+  "homepage": "https://github.com/sabihak89/lithium#readme",
   "dependencies": {
-    "next": "11.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "next": "^13.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.0"
+    "eslint": "^8.28.0",
+    "eslint-config-next": "^13.0.5"
   }
 }

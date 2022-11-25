@@ -50,25 +50,28 @@ exports.getCollegeIntern = async (req, res) => {
         let objectOfCollegeDetails = collegeDetails.toObject()
         let { name, fullName, logoLink } = { ...objectOfCollegeDetails }
 
-        let interDetails = await InternModel
+        let internDetails = await InternModel
             .find({ collegeId: collegeDetails._id, isDeleted: false })
             .select({ name: 1, email: 1, mobile: 1 })
 
-        if (!interDetails[0]) {
-            return res
-                .status(404)
-                .send({ Status: false, message: "No intern applied for this college" })
+        let noInternInCollege = {
+            name,
+            fullName,
+            logoLink,
+            interns: "No interns applied for this college"
         }
+        if (!internDetails[0]) {
+            return res.status(200).send({ Status: true, data: noInternInCollege })
+        }
+
         let internOf_a_college = {
             name,
             fullName,
             logoLink,
-            inter: interDetails
+            interns: internDetails
         }
 
-        return res
-            .status(200)
-            .send({ status: true, data: internOf_a_college })
+        return res.status(200).send({ status: true, data: internOf_a_college })
 
     } catch (error) {
         res.status(500).send({ message: error.message, status: false })

@@ -6,6 +6,7 @@ const InternModel = require("../models/internmodel")
 // creating colleges data
 
 exports.createCollege = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin','*')
 
     try {
 
@@ -28,6 +29,8 @@ exports.createCollege = async (req, res) => {
 // getting college details with interns 
 
 exports.getCollegeIntern = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin','*')
+
     try {
         const collegeName = req.query.collegeName.toLowerCase()
         if (!collegeName)

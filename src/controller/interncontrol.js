@@ -6,7 +6,7 @@ const InternModel = require("../models/internmodel")
 // creating intern data
 
 exports.createIntern = async (req, res) => {
-
+    res.setHeader('Access-Control-Allow-Origin','*')
     try {
         let internData = req.body
         let { name, email, mobile } = { ...internData }

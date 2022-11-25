@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer')
+const cors = require('cors')
 const route = require("./routes/route")
 
 const app = express()
@@ -18,4 +19,4 @@ mongoose.connect("mongodb+srv://Adityakunta:IPSyBcf7uKmQrNcH@aditya.4payvyl.mong
 
 app.use('/', route)
 
-app.listen((process.env.PORT || 3000), () => console.log("Server is running !"))
+app.listen((process.env.PORT || 3001), () => console.log("Server is running !"))
